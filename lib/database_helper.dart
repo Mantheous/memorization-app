@@ -5,6 +5,14 @@ class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._init();
   static Database? _database;
 
+  static const String _flashcardTableName = 'flashcards';
+  static const String _idColName = 'id';
+  static const String _refColName = 'reference';
+  static const String _targetRetentionColName = 'targetRetention';
+  static const String _dueDateColName = 'dueDate';
+  static const String _timeAllowedPerReviewColName = 'timeAllowedPerReview';
+
+
   DatabaseHelper._init();
 
   Future<Database> get database async {
@@ -24,7 +32,18 @@ class DatabaseHelper {
   }
 
   Future _createDB(Database db, int version) async {
-    // TODO: Create tables here
+    // The database will require real information,
+    // any secondary data must be obtained before entering
+    // the data into the database.
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS $_flashcardTableName (
+        $_idColName INTEGER PRIMARY KEY AUTOINCREMENT,
+        $_refColName TEXT NOT NULL,
+        $_targetRetentionColName INTEGER NOT NULL,
+        $_dueDateColName TEXT NOT NULL,
+        $_timeAllowedPerReviewColName INTEGER NOT NULL
+      )
+    ''');
   }
 
   Future close() async {

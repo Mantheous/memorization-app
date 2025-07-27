@@ -23,10 +23,11 @@ class FlashCard {
 
   factory FlashCard.fromJson(Map<String, dynamic> json) {
     return FlashCard(
-      id: availableId++, // I don't know if this works
+      //id: availableId++, // It is probably better to have the database assign the id
       ref: ScriptureReference(
-        book: Book.values[json['book'] as int],
+        book: Book.values[json['book']],
         chapter: json['chapter'] as int,
+        verse: json['verse'] as int,
       ),
       targetRetention: json['targetRetention'] as int?,
       dueDate: json['dueDate'] != null
@@ -39,5 +40,14 @@ class FlashCard {
       index: json['index'] as int?,
     );
 
+  }
+
+  factory FlashCard.fromString(String ref) {
+    // TODO: Make FlashCard.fromString
+    return FlashCard(ref: ScriptureReference(
+      book: Book.nephiOne, // Placeholder, implement logic to parse ref
+      chapter: 1, // Placeholder, implement logic to parse ref
+      verse: 1, // Placeholder, implement logic to parse ref
+    ));
   }
 }

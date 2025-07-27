@@ -1,15 +1,17 @@
 import 'scripture_reference_model.dart';
+import '../data/book_model.dart';
 
 class FlashCard {
   static int availableId = 0;
 
   final int? id;
+  // TODO: Create Reference Class. ScriptureReference should extend the reference class.
   final ScriptureReference ref;
   final int? targetRetention;
   final DateTime? dueDate;
   final DateTime? lastReview;
   final int? passingSplit;
-  final int? index;
+  final int? chapterIndex;
 
   const FlashCard({
     this.id,
@@ -18,7 +20,7 @@ class FlashCard {
     this.dueDate,
     this.lastReview,
     this.passingSplit,
-    this.index,
+    this.chapterIndex,
   });
 
   factory FlashCard.fromJson(Map<String, dynamic> json) {
@@ -37,17 +39,17 @@ class FlashCard {
           ? DateTime.parse(json['lastReview'] as String)
           : null,
       passingSplit: json['passingSplit'] as int?,
-      index: json['index'] as int?,
+      chapterIndex: json['index'] as int?,
     );
 
   }
 
   factory FlashCard.fromString(String ref) {
-    // TODO: Make FlashCard.fromString
-    return FlashCard(ref: ScriptureReference(
-      book: Book.nephiOne, // Placeholder, implement logic to parse ref
-      chapter: 1, // Placeholder, implement logic to parse ref
-      verse: 1, // Placeholder, implement logic to parse ref
-    ));
-  }
+    final sRef = ScriptureReference.fromString(ref);
+    return FlashCard(ref: sRef,
+      targetRetention: 0,
+      dueDate: DateTime.now(),
+      lastReview: null,
+      passingSplit: null,
+  );}
 }
